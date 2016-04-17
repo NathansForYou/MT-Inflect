@@ -3,7 +3,6 @@
 """
 Outputs a fully inflected version of a lemmatized test set (provided on STDIN). 
 If training data is provided, it will use a unigram model to select the form.
-
 usage: cat LEMMA_FILE | python inflect
        [-t TRAINING_PREFIX] [-l LEMMA_SUFFIX] [-w WORD_SUFFIX]
 """
