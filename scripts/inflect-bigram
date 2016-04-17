@@ -57,7 +57,9 @@ if __name__ == '__main__':
     for line in sys.stdin:
         last_lemma = '<s>'
         lemmas = []
+        # iterate through keeping track of previous lemma for bigram bests
         for lemma in line.rstrip().split():
             lemmas.append(best_inflection(last_lemma, lemma))
             last_lemma = lemma
+        # print finalized output as before
         print ' '.join(lemmas)
