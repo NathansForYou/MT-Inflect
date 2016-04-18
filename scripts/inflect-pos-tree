@@ -16,14 +16,14 @@ from itertools import izip
 
 from tree import DepTree
 
-parser = argparse.ArgumentParser(description="Inflect a lemmatized corpus")
-parser.add_argument("-t", type=str, default="data/train", help="training data prefix")
-parser.add_argument("-d", type=str, default="data/dtest", help="test data prefix")
-parser.add_argument("-l", type=str, default="lemma", help="lemma file suffix")
-parser.add_argument("-w", type=str, default="form", help="word file suffix")
-parser.add_argument("-r", type=str, default="tree", help="tree file suffix")
-parser.add_argument("-p", type=str, default="tag", help="part of speech suffix")
-args = parser.parse_args()
+PARSER = argparse.ArgumentParser(description="Inflect a lemmatized corpus")
+PARSER.add_argument("-t", type=str, default="data/train", help="training data prefix")
+PARSER.add_argument("-d", type=str, default="data/dtest", help="test data prefix")
+PARSER.add_argument("-l", type=str, default="lemma", help="lemma file suffix")
+PARSER.add_argument("-w", type=str, default="form", help="word file suffix")
+PARSER.add_argument("-r", type=str, default="tree", help="tree file suffix")
+PARSER.add_argument("-p", type=str, default="tag", help="part of speech suffix")
+args = PARSER.parse_args()
 
 # Python sucks at UTF-8
 sys.stdout = codecs.getwriter('utf-8')(sys.stdout)

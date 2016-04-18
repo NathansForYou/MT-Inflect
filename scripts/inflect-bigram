@@ -19,6 +19,7 @@ PARSER = argparse.ArgumentParser(description="Inflect a lemmatized corpus")
 PARSER.add_argument("-t", type=str, default="data/train", help="training data prefix")
 PARSER.add_argument("-l", type=str, default="lemma", help="lemma file suffix")
 PARSER.add_argument("-w", type=str, default="form", help="word file suffix")
+PARSER.add_argument("-d", type=str, default="data/dtest", help="test data prefix")
 args = PARSER.parse_args()
 
 # Python sucks at UTF-8
@@ -54,7 +55,7 @@ if __name__ == '__main__':
                 LEMMAS[lemma][word] = LEMMAS[lemma].get(word,0) + 1
 
     # Choose the most common inflection for each word and output them as a sentence
-    for line in sys.stdin:
+    for line in utf8read(combine(args.d, args.l)):
         last_lemma = '<s>'
         lemmas = []
         # iterate through keeping track of previous lemma for bigram bests
