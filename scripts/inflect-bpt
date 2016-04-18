@@ -29,7 +29,7 @@ args = PARSER.parse_args()
 sys.stdout = codecs.getwriter('utf-8')(sys.stdout)
 sys.stdin = codecs.getreader('utf-8')(sys.stdin)
 
-def inflections(word,last_lemma, lemma, pos, tree):
+def inflections(last_lemma, lemma, pos, tree):
     # same as bigram with tuple now lemma and tree representation
     if LEMMAS.has_key((last_lemma, lemma, pos, tree)):
         return sorted(LEMMAS[(last_lemma, lemma, pos, tree)].keys(), lambda x, y: cmp(LEMMAS[(last_lemma, lemma, pos, tree)][y], LEMMAS[(last_lemma, lemma, pos, tree)][x]))
@@ -47,8 +47,8 @@ def inflections(word,last_lemma, lemma, pos, tree):
         return sorted(LEMMAS[lemma].keys(), lambda x, y: cmp(LEMMAS[lemma][y], LEMMAS[lemma][x]))
     return [lemma]
 
-def best_inflection(word, last_lemma, lemma, pos, tree):
-    return inflections(word, last_lemma, lemma, pos, tree)[0]
+def best_inflection(last_lemma, lemma, pos, tree):
+    return inflections(last_lemma, lemma, pos, tree)[0]
 
 if __name__ == '__main__':
     # Build a simple unigram model on the training data
@@ -74,12 +74,12 @@ if __name__ == '__main__':
                 LEMMAS[(lemma, pos, tree)][word] = LEMMAS[(lemma, pos, tree)].get(word, 0) + 1
 
     # Choose the most common inflection for each word and outpu them as a sentence
-    for words, lemmas, parts, treestr in izip(utf8read(combine(args.d, args.w)), utf8read(combine(args.d, args.l)), utf8read(combine(args.d, args.p)), utf8read(combine(args.d, args.r))):
+    for lemmas, parts, treestr in izip(utf8read(combine(args.d, args.l)), utf8read(combine(args.d, args.p)), utf8read(combine(args.d, args.r))):
         last = '<s>'
         output_lemmas = []
         # best inflection for words, lemmas, previous lemmas, trees input to inflections
-        for x, y, pos, z in izip(words.rstrip().lower().split(), lemmas.rstrip().lower().split(), parts.rstrip().lower().split(), DepTree(treestr)):
-            output_lemmas.append(best_inflection(x, last, y, pos, (z.parent_index(), z.label())))
+        for y, pos, z in izip(lemmas.rstrip().lower().split(), parts.rstrip().lower().split(), DepTree(treestr)):
+            output_lemmas.append(best_inflection(last, y, pos, (z.parent_index(), z.label())))
             last = y
         print ' '.join(output_lemmas)
 
