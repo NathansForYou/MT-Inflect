@@ -79,7 +79,7 @@ if __name__ == '__main__':
         output_lemmas = []
         # best inflection for words, lemmas, previous lemmas, trees input to inflections
         for x, y, pos, z in izip(words.rstrip().lower().split(), lemmas.rstrip().lower().split(), parts.rstrip().lower().split(), DepTree(treestr)):
-            output_lemmas.append([best_inflection(x, last, y, pos, (z.parent_index(), z.label()))])
+            output_lemmas.append(best_inflection(x, last, y, pos, (z.parent_index(), z.label())))
             last = y
         print ' '.join(output_lemmas)
 

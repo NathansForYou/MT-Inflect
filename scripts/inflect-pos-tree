@@ -65,3 +65,4 @@ if __name__ == '__main__':
     for words, lemmas, parts, treestr in izip(utf8read(combine(args.d, args.w)), utf8read(combine(args.d, args.l)), utf8read(combine(args.d, args.p)), utf8read(combine(args.d, args.r))):
         # best inflection for words, lemmas, trees input to inflections
         print ' '.join([best_inflection(x, y, pos, (z.parent_index(), z.label())) for x, y, pos, z in izip(words.rstrip().lower().split(), lemmas.rstrip().lower().split(), parts.rstrip().lower().split(), DepTree(treestr))])
+
